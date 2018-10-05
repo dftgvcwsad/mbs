@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 导入头文件 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- 读取db.properties里面的数据源配置信息 -->
+	<context:property-placeholder
+		location="classpath:db.properties" system-properties-mode="FALLBACK" />
+	<!-- springjdbc自带的数据源 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${driver}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>
+	<bean id="sqlSessionFactory"
+		class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
+		<!-- 注入数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 配置实体扫描路径，多个package可以用分号; 逗号, 分隔， 支持通配符* -->
+		<!-- com.a.b.entity;com.a.c.entity;com.d.*.entity -->
+		<property name="typeAliasesPackage" value="cn.sxt.domain" />
+		<!-- 加载mybatis.cfg -->
+		<property name="configuration" ref="mybatisConfig" />
+		<!-- MP 全局配置注入 -->
+		<property name="globalConfig" ref="globalConfig" />
+		<!-- 自定义mapper映射的位置 -->
+		<property name="mapperLocations"
+			value="classpath:cn/sxt/mapping/*.xml" />
+		<property name="plugins">
+			<array>
+				<!-- 分页插件配置 -->
+				<bean id="paginationInterceptor"
+					class="com.baomidou.mybatisplus.plugins.PaginationInterceptor" />
+				<!-- 乐观锁插件 -->
+				<bean id="optimisticLockerInterceptor"
+					class="com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor">
+				</bean>
+				<!-- 性能拦截器，兼打印sql，不建议生产环境配置 -->
+				<bean id="performanceInterceptor"
+					class="com.baomidou.mybatisplus.plugins.PerformanceInterceptor" />
+			</array>
+		</property>
+	</bean>
+	
+	<bean id="mybatisConfig"
+		class="com.baomidou.mybatisplus.MybatisConfiguration">
+		<property name="mapUnderscoreToCamelCase" value="true" />
+	</bean>
+
+	<!-- 定义 MP 全局策略 -->
+	<bean id="globalConfig"
+		class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+		<property name="idType" value="0" />
+	</bean>
+
+
+	<!-- 配置mybatis 扫描mapper接口的路径, 相当于注解@MapperScan，@MapperScan("com.baomidou.mybatisplus.test.h2.entity.mapper") -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 注入扫描包的路径 如果有多个包 value="com.sxt.mapper,com.bjsxt.mapper" 或者 <value> 
+			com.sxt.mapper com.bjsxt.mapper </value> -->
+		<property name="basePackage" value="cn.sxt.mapper"></property>
+		<property name="sqlSessionFactoryBeanName"
+			value="sqlSessionFactory"></property>
+	</bean>
+</beans>

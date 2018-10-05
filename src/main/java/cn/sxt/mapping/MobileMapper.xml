@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sxt.mapper.MobileMapper">
+
+    <!-- 开启二级缓存 -->
+    <!-- <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.sxt.domain.Mobile">
+        <id column="mobile_number" property="mobileNumber" />
+        <result column="mobile_type" property="mobileType" />
+        <result column="card_number" property="cardNumber" />
+        <result column="is_available" property="isAvailable" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        mobile_number, mobile_type, card_number, is_available
+    </sql>
+
+</mapper>

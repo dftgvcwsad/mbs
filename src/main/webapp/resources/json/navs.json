@@ -1,0 +1,62 @@
+[
+		{
+			"title": "操作员管理",
+			"icon": "icon-text",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "操作员列表",
+					"icon": "&#xe609;",
+					"href": "../operator/toOperatorManager.action",
+					"spread": false
+				},
+				{
+					"title": "扩展1",
+					"icon": "&#xe609;",
+					"href": "",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "资源管理",
+			"icon": "&#xe634;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "新增资源",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "扩展2",
+					"icon": "&#xe609;",
+					"href": "login.html",
+					"spread": false
+				}
+			]
+		},
+		{
+			"title": "其他页面",
+			"icon": "&#xe630;",
+			"href": "",
+			"spread": false,
+			"children": [
+				{
+					"title": "404页面",
+					"icon": "&#xe61c;",
+					"href": "page/404.html",
+					"spread": false
+				},
+				{
+					"title": "登录",
+					"icon": "&#xe609;",
+					"href": "login.html",
+					"spread": false
+				}
+			]
+		}
+	]
